@@ -1,4 +1,16 @@
-  print("API HIT")
+from flask import Flask, request, jsonify
+from extract import extract_text
+import os
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "PDF Extractor API Running 🚀"
+
+@app.route('/extract', methods=['POST'])
+def extract():
+    print("API HIT")
 
     if 'file' not in request.files:
         return jsonify({"error": "No file"}), 400
