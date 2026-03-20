@@ -17,9 +17,8 @@ def extract_text(path):
         pass
 
     # If text too small → OCR
-    if len(text.strip()) < 100:
-        images = convert_from_path(path)
-        for img in images:
-            text += pytesseract.image_to_string(img, lang='eng+hin')
+   # Disable OCR for now (Render free fix)
+if len(text.strip()) < 100:
+    text += "\n[OCR not supported on server - only text PDF works]"
 
     return text
