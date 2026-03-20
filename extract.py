@@ -2,23 +2,21 @@ import pdfplumber
 from pdf2image import convert_from_path
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
-
 def extract_text(path):
     text = ""
 
-    # Try normal extraction
+    # Step 1: Try normal PDF text extraction
     try:
         with pdfplumber.open(path) as pdf:
             for page in pdf.pages:
-                if page.extract_text():
-                    text += page.extract_text() + "\n"
-    except:
-        pass
+                page_text = page.extract_text()
+                if page_text:
+                    text += page_text + "\n"
+    except Exception as e:
+        print("Error in pdfplumber:", e)
 
-    # If text too small → OCR
-   # Disable OCR for now (Render free fix)
-if len(text.strip()) < 100:
-    text += "\n[OCR not supported on server - only text PDF works]"
+    # Step 2: Disable OCR for Render (temporary)
+    if len(text.strip()) < 100:
+        text += "\n[OCR not supported on server]"
 
     return text
