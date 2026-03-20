@@ -15,7 +15,7 @@ def extract():
     file.save(file_path)
 
     text = extract_text(file_path)
-
+    print("DEBUG TEXT:", text[:200])  # 👈 add this
     os.remove(file_path)
 
     return jsonify({
